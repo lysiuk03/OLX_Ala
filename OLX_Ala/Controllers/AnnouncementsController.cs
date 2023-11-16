@@ -8,11 +8,34 @@ namespace OLX_Ala.Controllers
     public class AnnouncementsController : Controller
     {
          AlaOlxDbContext ctx=new AlaOlxDbContext();
+        private void LoadSelect()
+        {
+            this.ViewBag.Categories = new SelectList(ctx.Categorys.ToList(), "Id", "Name");
+            this.ViewBag.Cities = new SelectList(ctx.Regions.ToList(), "Id", "Name");
+        }
 
         public IActionResult Index()
         {
             var announcement = ctx.Announcements.ToList();
             return View(announcement);
+        }
+        [HttpGet]
+        public IActionResult Create()
+        {
+            LoadSelect();
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Create(Announcement announcement)
+        {
+            if (!ModelState.IsValid)
+            {
+                LoadSelect();
+                return View(announcement);
+            }
+            ctx.Announcements.Add(announcement);
+            ctx.SaveChanges();
+            return RedirectToAction("Index");
         }
         public IActionResult Delete(int id)
         {
