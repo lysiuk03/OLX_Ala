@@ -1,0 +1,50 @@
+﻿@model List<OLX_Ala.Data.Entities.Announcement>;
+@{
+    ViewData["Title"] = "Announcements";
+}
+
+<h1>Announcements List</h1>
+
+<table class="table table-success table-striped mt-3">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Category</th>
+            <th scope="col">Status</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var i in Model)
+        {
+            <tr class="align-middle">
+                <th scope="row">@i.Id</th>
+                <td>@i.Name</td>
+                <td>@i.Price$</td>
+                <td>@i.CategoryId</td>
+                <td>
+                    @if (i.InStock)
+                    {
+                        <span class="badge bg-success">In Stock</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Out of Stock</span>
+                    }
+                </td>
+                <td>
+                    <div class="btn-group">
+
+                        <a asp-action="Detail" asp-route-id="@i.Id" class="btn btn-success">Details</a>
+                        <a asp-action="Delete" asp-route-id="@i.Id" class="btn btn-danger">Delete</a>
+                    </div>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p class="text-center">Count: @Model.Count</p>
