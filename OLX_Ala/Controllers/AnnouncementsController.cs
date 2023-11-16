@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using DataAccess.Data;
+using DataAccess.Data.Entities;
 using OLX_Ala.Data;
-using OLX_Ala.Data.Entities;
 
 namespace OLX_Ala.Controllers
 {
     public class AnnouncementsController : Controller
     {
-         AlaOlxDbContext ctx=new AlaOlxDbContext();
+        AlaOlxDbContext ctx =new AlaOlxDbContext();
         private void LoadSelect()
         {
             this.ViewBag.Categories = new SelectList(ctx.Categorys.ToList(), "Id", "Name");
@@ -18,6 +19,21 @@ namespace OLX_Ala.Controllers
         {
             var announcement = ctx.Announcements.ToList();
             return View(announcement);
+        }
+
+        public IActionResult Edit(int id)
+        {
+            var item = ctx.Announcements.Find(id);
+            if (item == null) return NotFound();
+            LoadSelect();
+            return View(item);
+        }
+        [HttpPost]
+        public IActionResult Edit(Announcement announcement)
+        {
+            ctx.Announcements.Update(announcement);
+            ctx.SaveChanges();
+            return RedirectToAction("Index");
         }
         [HttpGet]
         public IActionResult Create()

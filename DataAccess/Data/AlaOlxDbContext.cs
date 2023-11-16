@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using OLX_Ala.Data.Entities;
+using DataAccess.Data.Entities;
 
 namespace OLX_Ala.Data
 {
