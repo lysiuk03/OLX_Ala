@@ -8,7 +8,12 @@ namespace OLX_Ala.Controllers
 {
     public class AnnouncementsController : Controller
     {
-        AlaOlxDbContext ctx =new AlaOlxDbContext();
+        private readonly AlaOlxDbContext ctx;
+
+        public AnnouncementsController(AlaOlxDbContext ctx)
+        {
+            this.ctx = ctx;
+        }
         private void LoadSelect()
         {
             this.ViewBag.Categories = new SelectList(ctx.Categorys.ToList(), "Id", "Name");

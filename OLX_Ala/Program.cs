@@ -1,3 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using DataAccess.Data;
+using OLX_Ala.Data;
+
 namespace OLX_Ala
 {
     public class Program
@@ -6,8 +10,12 @@ namespace OLX_Ala
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            string connStr = builder.Configuration.GetConnectionString("LocalDb");
+
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddDbContext<AlaOlxDbContext>(opts=>opts.UseSqlServer(connStr));
 
             var app = builder.Build();
 

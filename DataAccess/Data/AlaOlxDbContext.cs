@@ -5,10 +5,18 @@ namespace OLX_Ala.Data
 {
     public class AlaOlxDbContext : DbContext
     {
+        public AlaOlxDbContext()
+        {
+            
+        }
+        public AlaOlxDbContext(DbContextOptions options):base(options)
+        {
+            
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Ala_Olx;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
+           // optionsBuilder.UseSqlServer("");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
