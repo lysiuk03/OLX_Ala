@@ -1,6 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using DataAccess.Data;
 using OLX_Ala.Data;
+using FluentValidation;
+using DataAccess.Data.Entities;
+using OLX_Ala.Validators;
+using FluentValidation.AspNetCore;
 
 namespace OLX_Ala
 {
@@ -16,6 +20,9 @@ namespace OLX_Ala
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddDbContext<AlaOlxDbContext>(opts=>opts.UseSqlServer(connStr));
+
+            builder.Services.AddFluentValidationAutoValidation();
+            builder.Services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
 
             var app = builder.Build();
 
