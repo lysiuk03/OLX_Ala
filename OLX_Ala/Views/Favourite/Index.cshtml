@@ -1,0 +1,34 @@
+﻿@model List<DataAccess.Data.Entities.Announcement>
+
+<div class="card text-center">
+    <div class="card-header">
+       Favourites
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">&#9829; Announcements &#9829;</h5>
+        
+                <div class="row row-cols-1 row-cols-md-5 g-4">
+                    @foreach (var i in Model)
+                    {
+                        <div class="col">
+                            <div class="card h-100">
+                                <img height="200" src="@i.ImageURL" class="card-img-top">
+                                <div class="card-body">
+                                    <h5 class="card-title">@i.Name</h5>
+                                    <p class="card-text">Price: @i.Price$</p>
+                                    <p class="card-text">Category: @i.CategoryId</p>
+                                    <a asp-controller="Favourite" asp-action="Unfavourit" asp-route-id="@i.Id" class="btn btn-danger">Unfavourit</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+       <div>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-secondary mt-3">Continue</a>
+        </div>
+    </div>
+    <div class="card-footer text-body-secondary">
+        Total: <span class="badge bg-secondary">@Model.Count</span>
+    </div>
+</div>

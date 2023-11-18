@@ -21,10 +21,9 @@ namespace OLX_Ala.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
             modelBuilder.Entity<Announcement>()
-      .Property(a => a.Price)
-      .HasColumnType("decimal(5,2)");
+                .Property(a => a.Price)
+                .HasColumnType("decimal(18,2)");
 
             modelBuilder.Entity<Category>().HasData(new[]
             {

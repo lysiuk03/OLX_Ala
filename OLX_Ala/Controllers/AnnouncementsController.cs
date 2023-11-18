@@ -23,6 +23,7 @@ namespace OLX_Ala.Controllers
         public IActionResult Index()
         {
             var announcement = ctx.Announcements.ToList();
+           
             return View(announcement);
         }
 

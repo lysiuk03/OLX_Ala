@@ -24,6 +24,14 @@ namespace OLX_Ala
             builder.Services.AddFluentValidationAutoValidation();
             builder.Services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
 
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout=TimeSpan.FromDays(1);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential= true;
+            });
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -40,6 +48,8 @@ namespace OLX_Ala
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.MapControllerRoute(
                 name: "default",
