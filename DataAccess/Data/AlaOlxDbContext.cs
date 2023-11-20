@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using DataAccess.Data.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace OLX_Ala.Data
 {
-    public class AlaOlxDbContext : DbContext
+    public class AlaOlxDbContext : IdentityDbContext
     {
         public AlaOlxDbContext()
         {

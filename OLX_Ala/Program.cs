@@ -5,6 +5,7 @@ using FluentValidation;
 using DataAccess.Data.Entities;
 using OLX_Ala.Validators;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace OLX_Ala
 {
@@ -20,6 +21,8 @@ namespace OLX_Ala
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddDbContext<AlaOlxDbContext>(opts=>opts.UseSqlServer(connStr));
+
+            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<AlaOlxDbContext>();
 
             builder.Services.AddFluentValidationAutoValidation();
             builder.Services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
@@ -50,6 +53,8 @@ namespace OLX_Ala
             app.UseAuthorization();
 
             app.UseSession();
+
+            app.MapRazorPages();
 
             app.MapControllerRoute(
                 name: "default",
