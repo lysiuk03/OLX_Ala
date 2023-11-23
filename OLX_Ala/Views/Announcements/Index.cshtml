@@ -5,9 +5,12 @@
 
 <h1>Announcements List</h1>
 
-<div>
-    <a asp-action="Create" class="btn btn-primary">Create new Announcement</a>
-</div>
+@if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+{
+    <div>
+        <a asp-action="Create" class="btn btn-primary">Create new Announcement</a>
+    </div>
+}
 
 <table class="table table-success table-striped mt-3">
     <thead>
@@ -42,7 +45,10 @@
                     <div class="btn-group">
                         <a asp-action="Edit" asp-route-id="@i.Id" class="btn btn-warning">Edit</a>
                         <a asp-action="Detail" asp-route-id="@i.Id" class="btn btn-success">Details</a>
-                        <a asp-action="Delete" asp-route-id="@i.Id" class="btn btn-danger">Delete</a>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a asp-action="Delete" asp-route-id="@i.Id" class="btn btn-danger">Delete</a>
+                        }
                     </div>
 
                 </td>

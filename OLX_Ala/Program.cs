@@ -6,6 +6,7 @@ using DataAccess.Data.Entities;
 using OLX_Ala.Validators;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
+using OLX_Ala.Helpers;
 
 namespace OLX_Ala
 {
@@ -22,7 +23,11 @@ namespace OLX_Ala
 
             builder.Services.AddDbContext<AlaOlxDbContext>(opts=>opts.UseSqlServer(connStr));
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<AlaOlxDbContext>();
+            //builder.Services.AddIdentity<User,IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<AlaOlxDbContext>();
+            builder.Services.AddIdentity<User, IdentityRole>()
+               .AddDefaultTokenProviders()
+               .AddDefaultUI()
+               .AddEntityFrameworkStores<AlaOlxDbContext>();
 
             builder.Services.AddFluentValidationAutoValidation();
             builder.Services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
@@ -36,6 +41,13 @@ namespace OLX_Ala
 
 
             var app = builder.Build();
+
+            using(var scope=app.Services.CreateScope())
+            {
+                var serviceProvider=scope.ServiceProvider;
+                SeedExtensions.SeedRoles(serviceProvider).Wait();
+                SeedExtensions.SeedAdmin(serviceProvider).Wait();
+            }
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())

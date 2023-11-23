@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DataAccess.Data.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using OLX_Ala.Data;
 using OLX_Ala.Models;
 using System.Diagnostics;
@@ -15,6 +17,7 @@ namespace OLX_Ala.Controllers
         }
         public IActionResult Index()
         {
+           
             return View(ctx.Announcements.ToList());
         }
 

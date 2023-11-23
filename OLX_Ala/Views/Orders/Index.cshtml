@@ -1,0 +1,30 @@
+﻿@model List<DataAccess.Data.Entities.Order>;
+@{
+    ViewData["Title"] = "My Orders";
+}
+
+<h1>My Orders</h1>
+
+<table class="table table-success table-striped mt-3">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Date and Time Ordered</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model)
+        {
+            <tr class="align-middle">
+                <th scope="row">@order.Id</th>
+                <td>@order.announcement.Name</td>
+                <td>@order.announcement.Price$</td>
+                <td>@order.Created.ToString("yyyy-MM-dd HH:mm:ss")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p class="text-center">Count: @Model.Count</p>

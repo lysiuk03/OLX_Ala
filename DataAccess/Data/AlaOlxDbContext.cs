@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿
 using DataAccess.Data.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace OLX_Ala.Data
 {
-    public class AlaOlxDbContext : IdentityDbContext
+    public class AlaOlxDbContext : IdentityDbContext<User>
     {
         public AlaOlxDbContext()
         {
@@ -70,15 +71,11 @@ namespace OLX_Ala.Data
                 new Region() {Id=24, Name="Chernihiv"}
             });
 
-            modelBuilder.Entity<Announcement>().HasData(new[]
-            {
-                new Announcement() {Id=1, Name="Cat", Price=30,InStock=true, ImageURL="https://ireland.apollo.olxcdn.com/v1/files/nska4awhvbf5-UA/image",CategoryId=7, RegionId=15,Description="The kitten is looking for a family!",ContactName="Dasha",Phone="0685062142"},
-                new Announcement() {Id=2, Name="Dog", Price=20,InStock=false, ImageURL="https://ireland.apollo.olxcdn.com/v1/files/giu39aqm2mrq1-UA/image",CategoryId=7, RegionId=13,Description="The puppy is looking for a family!",ContactName="Dasha",Phone="0683552144"},
-                new Announcement() {Id=3, Name="Rat", Price=10,InStock=true, ImageURL="https://ireland.apollo.olxcdn.com/v1/files/1xbhsqtzmnmo-UA/image",CategoryId=7, RegionId=16,Description="The rat is looking for a family!",ContactName="Dasha",Phone="0685062142"}
-            });
+            
         }
         public DbSet<Announcement> Announcements { get; set; }
         public DbSet<Category> Categorys { get; set; }
         public DbSet<Region> Regions { get; set; }
+        public DbSet<Order> Orders { get; set; }
     }
 }
