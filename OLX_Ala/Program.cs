@@ -16,7 +16,7 @@ namespace OLX_Ala
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            string connStr = builder.Configuration.GetConnectionString("LocalDb");
+            string connStr = builder.Configuration.GetConnectionString("AzureDb");
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
