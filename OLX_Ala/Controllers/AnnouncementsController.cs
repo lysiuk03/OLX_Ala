@@ -6,6 +6,9 @@ using OLX_Ala.Data;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
+using OLX_Ala.Models;
+using System.Drawing;
+using OLX_Ala.Helpers;
 
 namespace OLX_Ala.Controllers
 {
@@ -13,11 +16,14 @@ namespace OLX_Ala.Controllers
     public class AnnouncementsController : Controller
     {
         private readonly AlaOlxDbContext ctx;
+        private readonly IFileService fileService;
+
         private string CurrentUserId => User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        public AnnouncementsController(AlaOlxDbContext ctx)
+        public AnnouncementsController(AlaOlxDbContext ctx, IFileService fileService)
         {
             this.ctx = ctx;
+            this.fileService = fileService;
         }
         private void LoadSelect()
         {
@@ -63,16 +69,29 @@ namespace OLX_Ala.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Announcement announcement)
+        public async Task <IActionResult> Create(CreateAnnouncementModel model)
         {
-            announcement.UserId = CurrentUserId;
+            //announcement.UserId = CurrentUserId;
             if (!ModelState.IsValid)
             {
                 LoadSelect();
-                return View(announcement);
+                return View(model);
             }
-           
-            ctx.Announcements.Add(announcement);
+            var announcement = new Announcement()
+            {
+                Name = model.Name,
+                Price = model.Price,
+                InStock = model.InStock,
+                ImageURL = await fileService.SaveAnnouncementImage(model.ImageFile) ,
+                CategoryId = model.CategoryId,
+                RegionId = model.RegionId,
+                Discount = model.Discount,
+                Description = model.Description,
+                ContactName = model.ContactName,
+                Phone = model.Phone
+            };
+
+        ctx.Announcements.Add(announcement);
             ctx.SaveChanges();
             return RedirectToAction("Index");
         }

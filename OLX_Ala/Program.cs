@@ -32,6 +32,8 @@ namespace OLX_Ala
             builder.Services.AddFluentValidationAutoValidation();
             builder.Services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
 
+            builder.Services.AddScoped<IFileService, AzureFileService>();
+
             builder.Services.AddSession(options =>
             {
                 options.IdleTimeout=TimeSpan.FromDays(1);
